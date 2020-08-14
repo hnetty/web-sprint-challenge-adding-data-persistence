@@ -6,7 +6,7 @@ exports.up = function(knex) {
             tbl.increments("projectID");
             tbl.string("name").notNullable().index();
             tbl.string("description");
-            tbl.boolean("completed").notNullable().defaultTo(false); 
+            tbl.boolean("completed").notNullable(); 
         })
         .createTable("resource", tbl => {
             tbl.increments("resourceID");
@@ -19,7 +19,7 @@ exports.up = function(knex) {
             tbl.string("additionalInfo");
             tbl.string("notes");
             tbl.boolean("completed").notNullable().defaultTo(false);
-            tbl.integer("projectID").unsigned().notNullable().references("id").inTable("project")
+            tbl.integer("projID").unsigned().notNullable().references("projectID").inTable("project")
         })
 
         // Hybrid table
@@ -33,8 +33,8 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return knex.schema
-    .dropTableIfExists("project")
-    .dropTableIfExists("resource")
+    .dropTableIfExists("project_resources")
     .dropTableIfExists("task")
-    .dropTableIfExists("project_resources");
+    .dropTableIfExists("resource")
+    .dropTableIfExists("project");
 };
