@@ -35,7 +35,13 @@ server.get('/api/resources', (req, res) => {
 // *** NEEDS WORK ***
 server.get('/api/tasks', (req, res) => {
     db('task')
-})
+    .then(tas => {
+        res.status(200).json(tas);
+    })
+    .catch( err => {
+        res.status(500).json(err);
+    });
+});
 
 
 // Adding a project
